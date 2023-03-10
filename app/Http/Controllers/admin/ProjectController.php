@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Project;
+use App\Models\Type;
 use Illuminate\Http\Request;
 use Faker\Generator as Faker;
 use Illuminate\Support\Arr;
@@ -39,7 +40,8 @@ class ProjectController extends Controller
     public function create()
     {
         $project = new Project;
-        return view('admin.projects.create', compact('project'));
+        $types = Type::all();
+        return view('admin.projects.create', compact('project', 'types'));
     }
 
     /**
@@ -53,7 +55,8 @@ class ProjectController extends Controller
                 'title' => 'required|string|unique:projects|max:40',
                 'description' => 'required|string',
                 'image' => 'nullable|image|mimes:png,jpeg,jpg',
-                'repo_link' => 'nullable|url'
+                'repo_link' => 'nullable|url',
+                'type' => 'nullable|exists:types,id'
             ],
             [
                 'title.required' => 'A title must be given',
@@ -64,7 +67,8 @@ class ProjectController extends Controller
                 'description.string' => 'The description must be a text',
                 'image.image' => 'Please, give an image file',
                 'image.mimes' => 'Only jpeg, jpg and png file supported',
-                'repo_link.url' => 'Please, give a valid URL'
+                'repo_link.url' => 'Please, give a valid URL',
+                'type' => 'This type is not valid'
             ]
         );
 
@@ -108,7 +112,8 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        return view('admin.projects.edit', compact('project'));
+        $types = Type::all();
+        return view('admin.projects.edit', compact('project', 'types'));
     }
 
     /**
@@ -122,7 +127,8 @@ class ProjectController extends Controller
                 'title' => ['required', 'string', Rule::unique('projects')->ignore($project->id), 'max:40'],
                 'description' => 'required|string',
                 'image' => 'nullable|image|mimes:png,jpeg,jpg',
-                'repo_link' => 'nullable|url'
+                'repo_link' => 'nullable|url',
+                'type' => 'nullable|exists:types,id'
             ],
             [
                 'title.required' => 'A title must be given',
@@ -133,7 +139,8 @@ class ProjectController extends Controller
                 'description.string' => 'The description must be a text',
                 'image.image' => 'Please, give an image file',
                 'image.mimes' => 'Only jpeg, jpg and png file supported',
-                'repo_link.url' => 'Please, give a valid URL'
+                'repo_link.url' => 'Please, give a valid URL',
+                'type' => 'This type is not valid'
             ]
         );
 
