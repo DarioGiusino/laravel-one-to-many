@@ -3,9 +3,11 @@
 namespace Database\Seeders;
 
 use App\Models\Project;
+use App\Models\Type;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Faker\Generator as Faker;
+use Illuminate\Support\Arr;
 
 class ProjectSeeder extends Seeder
 {
@@ -14,10 +16,15 @@ class ProjectSeeder extends Seeder
      */
     public function run(Faker $faker): void
     {
+        //types count selected by id, retrieved for all the values in the id column(pluck), and transformed in array
+        $types_count = Type::select('id')->pluck('id')->toArray();
+
         for ($i = 0; $i < 8; $i++) {
             // create new istance
             $project = new Project();
 
+            //type_id foreign key
+            $project->type_id = Arr::random($types_count);
             // fill cols with faker utils
             $project->title = $faker->text(20);
             $project->description = $faker->paragraphs(10, true);
