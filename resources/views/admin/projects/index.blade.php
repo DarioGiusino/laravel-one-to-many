@@ -45,13 +45,15 @@
 
             {{-- project title --}}
             {{-- ? null safe operator <td>{{ $project->type?->label }}</td>  --}}
-            <td><span class="badge text-black" style="background-color:{{ $project->type?->color }}">
+            <td>
+              <span class="badge text-black" style="background-color:{{ $project->type?->color }}">
                 @if ($project->type)
                   {{ $project->type->label }}
                 @else
                   -
                 @endif
-              </span></td>
+              </span>
+            </td>
 
             {{-- project status --}}
             <td><span

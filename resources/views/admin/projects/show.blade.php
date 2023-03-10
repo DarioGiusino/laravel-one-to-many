@@ -3,8 +3,17 @@
 @section('content')
   <section id="project-detail" class="container">
     {{-- project title --}}
-    <header>
-      <h2 class="text-center my-4">{{ $project->title }}</h2>
+    <header class="d-flex justify-content-center align-items-center">
+      <h2 class="my-4 me-2">{{ $project->title }}</h2>
+      <sup>
+        <span class="badge text-black" style="background-color:{{ $project->type?->color }}">
+          @if ($project->type)
+            {{ $project->type->label }}
+          @else
+            -
+          @endif
+        </span>
+      </sup>
     </header>
     {{-- content row --}}
     <div class="row row-cols-2">
