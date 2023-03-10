@@ -29,6 +29,7 @@
         <tr>
           <th scope="col">ID</th>
           <th scope="col">Title</th>
+          <th scope="col">Type</th>
           <th scope="col">Status</th>
           <th scope="col" class="text-end">Commands</th>
         </tr>
@@ -36,11 +37,28 @@
       <tbody>
         @forelse ($projects as $project)
           <tr>
+            {{-- project id --}}
             <th scope="row">{{ $project->id }}</th>
+
+            {{-- project title --}}
             <td>{{ $project->title }}</td>
+
+            {{-- project title --}}
+            {{-- ? null safe operator <td>{{ $project->type?->label }}</td>  --}}
+            <td><span class="badge text-black" style="background-color:{{ $project->type?->color }}">
+                @if ($project->type)
+                  {{ $project->type->label }}
+                @else
+                  -
+                @endif
+              </span></td>
+
+            {{-- project status --}}
             <td><span
                 class="text-{{ $project->is_published ? 'success' : 'danger' }}">{{ $project->is_published ? 'Online' : 'Draft' }}</span>
             </td>
+
+            {{-- project buttons --}}
             <td class="text-end">
               <a class="btn btn-sm btn-primary" href="{{ route('admin.projects.show', $project->id) }}">Open</a>
               <a class="btn btn-sm btn-warning" href="{{ route('admin.projects.edit', $project->id) }}">Edit</a>
@@ -52,11 +70,13 @@
             </td>
           </tr>
         @empty
+          {{-- if no projects --}}
           <h1 class="text-center">Projects list is empty</h1>
         @endforelse
       </tbody>
     </table>
     <hr>
+    {{-- add new project button --}}
     <div class="text-end">
       <a class="btn btn-sm btn-success me-2" href="{{ route('admin.projects.create') }}">Add</a>
     </div>
