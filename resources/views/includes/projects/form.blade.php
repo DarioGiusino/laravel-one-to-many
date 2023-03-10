@@ -1,10 +1,11 @@
 @if ($project->exists)
   <form class="mb-5" action="{{ route('admin.projects.update', $project->id) }}" method="post"
-    enctype="multipart/form-data">
+    enctype="multipart/form-data" novalidate>
     {{-- * method helper --}}
     @method('PUT')
   @else
-    <form class="mb-5" action="{{ route('admin.projects.store') }}" method="post" enctype="multipart/form-data">
+    <form class="mb-5" action="{{ route('admin.projects.store') }}" method="post" enctype="multipart/form-data"
+      novalidate>
 @endif
 {{-- ! cross-site request forgery --}}
 @csrf
@@ -68,6 +69,25 @@
       <textarea class="form-control @error('description') is-invalid @enderror" name="description" id="description"
         rows="10" required>{{ old('description', $project->description) }}</textarea>
     </div>
+  </div>
+</div>
+
+{{-- type select --}}
+<div class="col-3">
+  <div class="mb-3">
+    <label for="type_id" class="form-label">Type</label>
+    <select class="form-select @error('type_id') is-invalid @enderror" id="type_id" name="type_id">
+      <option value="">None</option>
+      @foreach ($types as $type)
+        <option @if (old('type_id', $project->type_id) == $type->id) selected @endif value="{{ $type->id }}">{{ $type->label }}
+        </option>
+      @endforeach
+    </select>
+    @error('type')
+      <div class="invalid-feedback">{{ $message }}</div>
+    @else
+      <div class="form-text">Select a project type</div>
+    @enderror
   </div>
 </div>
 
