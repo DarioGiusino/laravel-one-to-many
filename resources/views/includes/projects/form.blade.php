@@ -73,17 +73,19 @@
 </div>
 
 {{-- type select --}}
+{{-- !! the name must be the same on projects table (type_id) --}}
 <div class="col-3">
   <div class="mb-3">
     <label for="type_id" class="form-label">Type</label>
     <select class="form-select @error('type_id') is-invalid @enderror" id="type_id" name="type_id">
       <option value="">None</option>
       @foreach ($types as $type)
+        {{-- !! selected if old type_id (from select) or project's type_id is (double)equal to type->id in foreach --}}
         <option @if (old('type_id', $project->type_id) == $type->id) selected @endif value="{{ $type->id }}">{{ $type->label }}
         </option>
       @endforeach
     </select>
-    @error('type')
+    @error('type_id')
       <div class="invalid-feedback">{{ $message }}</div>
     @else
       <div class="form-text">Select a project type</div>
