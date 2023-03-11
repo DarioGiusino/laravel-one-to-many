@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Type;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 
 class TypeController extends Controller
 {
@@ -35,7 +36,34 @@ class TypeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // ! validation
+        $request->validate(
+            [
+                'label' => 'unique:types|required|string',
+                'color' => 'size:7|nullable'
+            ],
+            [
+                'label.unique' => 'This label is already taken',
+                'label.required' => 'A label must be given',
+                'label.string' => 'The label must be a text',
+                'color.size' => 'The color must be 7 character long'
+            ]
+        );
+
+        // retrieve the input values
+        $data = $request->all();
+
+        // create a new type
+        $type = new Type();
+
+        // fill new type with data from form
+        $type->fill($data);
+
+        // save new type on db
+        $type->save();
+
+        // redirect to index
+        return to_route('admin.types.index')->with('message', "$type->label created succesfully.")->with('type', 'success');
     }
 
     /**
@@ -52,7 +80,28 @@ class TypeController extends Controller
      */
     public function update(Request $request, Type $type)
     {
-        //
+        // ! validation
+        $request->validate(
+            [
+                'label' => [Rule::unique('types')->ignore($type->id), 'required', 'string'],
+                'color' => 'size:7|nullable'
+            ],
+            [
+                'label.unique' => 'This label is already taken',
+                'label.required' => 'A label must be given',
+                'label.string' => 'The label must be a text',
+                'color.size' => 'The color must be 7 character long'
+            ]
+        );
+
+        // retrieve the input values
+        $data = $request->all();
+
+        // update new type with data from form
+        $type->update($data);
+
+        // redirect to index
+        return to_route('admin.types.index')->with('message', "$type->label created succesfully.")->with('type', 'warning');
     }
 
     /**
