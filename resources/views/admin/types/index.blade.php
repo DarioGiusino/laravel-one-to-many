@@ -32,7 +32,6 @@
 
             {{-- type buttons --}}
             <td class="text-end">
-              <a class="btn btn-sm btn-primary" href="{{ route('admin.types.show', $type->id) }}">Open</a>
               <a class="btn btn-sm btn-warning" href="{{ route('admin.types.edit', $type->id) }}">Edit</a>
               <form class="d-inline delete-form" action="{{ route('admin.types.destroy', $type->id) }}" method="post"
                 data-form="{{ $type->title }}">

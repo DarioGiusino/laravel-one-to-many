@@ -44,7 +44,7 @@ class TypeController extends Controller
     public function edit(Type $type)
     {
         $types = Type::all();
-        return view('admin.projects.edit', compact('type', 'types'));
+        return view('admin.types.edit', compact('type', 'types'));
     }
 
     /**
