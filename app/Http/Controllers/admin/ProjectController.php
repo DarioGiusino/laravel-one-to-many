@@ -18,12 +18,12 @@ class ProjectController extends Controller
      */
     public function index(Request $request)
     {
-        $filter = $request->query('filter');
+        $status_filter = $request->query('status_filter');
 
         $query = Project::orderBy('id');
 
-        if ($filter) {
-            $value = $filter === 'draft' ? 0 : 1;
+        if ($status_filter) {
+            $value = $status_filter === 'draft' ? 0 : 1;
             $query->where('is_published', $value);
         }
 
@@ -31,7 +31,7 @@ class ProjectController extends Controller
         $projects = $query->paginate(10);
 
         //return projects index with projects
-        return view('admin.projects.index', compact('projects', 'filter'));
+        return view('admin.projects.index', compact('projects', 'status_filter'));
     }
 
     /**

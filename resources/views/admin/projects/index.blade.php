@@ -7,14 +7,22 @@
       <h3 class="text-center my-4">Projects List</h3>
     </header>
 
-    {{-- filter --}}
+    {{-- filters --}}
     <form action="{{ route('admin.projects.index') }}" method="get">
       <div class="input-group mb-3">
-        <select class="form-select" name="filter">
+        {{-- status filter --}}
+        <select class="form-select" name="status_filter">
           <option value="" selected>All</option>
-          <option @if ($filter === 'online') selected @endif value="online">Online</option>
-          <option @if ($filter === 'draft') selected @endif value="draft">Draft</option>
+          <option @if ($status_filter === 'online') selected @endif value="online">Online</option>
+          <option @if ($status_filter === 'draft') selected @endif value="draft">Draft</option>
         </select>
+        {{-- type filter --}}
+        <select class="form-select" name="type_filter">
+          <option value="" selected>All</option>
+          <option value="online">Online</option>
+          <option value="draft">Draft</option>
+        </select>
+        {{-- filters form button --}}
         <button class="btn btn-outline-secondary" type="submit">Filter</button>
       </div>
     </form>
