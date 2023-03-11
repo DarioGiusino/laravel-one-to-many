@@ -5,15 +5,28 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Models\Type;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class TypeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $type_filter = $request->query('type_filter');
+
+        $query = Type::orderBy('label');
+
+        // if there is a type filter
+        if ($type_filter) {
+            $query->where('id', $type_filter);
+        }
+
+        //get types from db
+        $types = $query->get();
+
+        return view('admin.tyeps.index', compact('types', 'type_filter'));
     }
 
     /**
@@ -21,7 +34,9 @@ class TypeController extends Controller
      */
     public function create()
     {
-        //
+        $type = new Type;
+        $types = Type::all();
+        return view('admin.types.create', compact('type', 'types'));
     }
 
     /**
@@ -33,19 +48,12 @@ class TypeController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(Type $type)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
     public function edit(Type $type)
     {
-        //
+        $types = Type::all();
+        return view('admin.projects.edit', compact('type', 'types'));
     }
 
     /**
@@ -61,6 +69,8 @@ class TypeController extends Controller
      */
     public function destroy(Type $type)
     {
-        //
+        $type->delete();
+
+        return to_route('admin.types.index')->with('message', "$type->title deleted succesfully.")->with('type', 'danger');;
     }
 }
