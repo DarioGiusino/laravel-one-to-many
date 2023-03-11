@@ -29,9 +29,11 @@ class ProjectController extends Controller
 
         //get projects from db
         $projects = $query->paginate(10);
+        //get types from db
+        $types = Type::all();
 
         //return projects index with projects
-        return view('admin.projects.index', compact('projects', 'status_filter'));
+        return view('admin.projects.index', compact('projects', 'types', 'status_filter'));
     }
 
     /**

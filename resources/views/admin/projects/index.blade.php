@@ -12,15 +12,16 @@
       <div class="input-group mb-3">
         {{-- status filter --}}
         <select class="form-select" name="status_filter">
-          <option value="" selected>All</option>
+          <option value="" selected>All status</option>
           <option @if ($status_filter === 'online') selected @endif value="online">Online</option>
           <option @if ($status_filter === 'draft') selected @endif value="draft">Draft</option>
         </select>
         {{-- type filter --}}
         <select class="form-select" name="type_filter">
-          <option value="" selected>All</option>
-          <option value="online">Online</option>
-          <option value="draft">Draft</option>
+          <option value="">All types</option>
+          @foreach ($types as $type)
+            <option value="{{ $type->id }}">{{ $type->label }}</option>
+          @endforeach
         </select>
         {{-- filters form button --}}
         <button class="btn btn-outline-secondary" type="submit">Filter</button>
