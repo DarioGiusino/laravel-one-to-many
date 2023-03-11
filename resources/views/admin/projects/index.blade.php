@@ -53,7 +53,7 @@
             {{-- project title --}}
             <td>{{ $project->title }}</td>
 
-            {{-- project title --}}
+            {{-- project type --}}
             {{-- ? null safe operator <td>{{ $project->type?->label }}</td>  --}}
             <td>
               <span class="badge text-black" style="background-color:{{ $project->type?->color }}">
