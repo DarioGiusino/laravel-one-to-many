@@ -113,4 +113,16 @@ class TypeController extends Controller
 
         return to_route('admin.types.index')->with('message', "$type->title deleted succesfully.")->with('type', 'danger');;
     }
+
+    /**
+     * Update the type color
+     */
+    public function patch(Request $request, Type $type)
+    {
+        $data = $request->all();
+
+        $type->update($data);
+
+        return to_route('admin.types.index');
+    }
 }
