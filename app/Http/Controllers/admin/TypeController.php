@@ -14,19 +14,10 @@ class TypeController extends Controller
      */
     public function index(Request $request)
     {
-        $type_filter = $request->query('type_filter');
-
-        $query = Type::orderBy('label');
-
-        // if there is a type filter
-        if ($type_filter) {
-            $query->where('id', $type_filter);
-        }
-
         //get types from db
-        $types = $query->get();
+        $types =  Type::orderBy('label')->get();
 
-        return view('admin.tyeps.index', compact('types', 'type_filter'));
+        return view('admin.types.index', compact('types'));
     }
 
     /**
