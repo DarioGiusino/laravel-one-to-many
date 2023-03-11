@@ -54,6 +54,10 @@
                 <a class="nav-link @if (request()->routeis('admin.projects*')) active @endif"
                   href="{{ route('admin.projects.index') }}">{{ __('Projects') }}</a>
               </li>
+              <li class="nav-item">
+                <a class="nav-link @if (request()->routeis('admin.types*')) active @endif"
+                  href="{{ route('admin.types.index') }}">{{ __('Types') }}</a>
+              </li>
             @endauth
           </ul>
 
