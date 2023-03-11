@@ -34,7 +34,7 @@
             <td class="text-end">
               <a class="btn btn-sm btn-warning" href="{{ route('admin.types.edit', $type->id) }}">Edit</a>
               <form class="d-inline delete-form" action="{{ route('admin.types.destroy', $type->id) }}" method="post"
-                data-form="{{ $type->title }}">
+                data-form="{{ $type->label }}">
                 @csrf @method('delete')
                 <button type="submit" class="btn btn-sm btn-danger">Delete</button>
               </form>
