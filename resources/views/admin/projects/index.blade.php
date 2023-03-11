@@ -20,7 +20,8 @@
         <select class="form-select" name="type_filter">
           <option value="">All types</option>
           @foreach ($types as $type)
-            <option value="{{ $type->id }}">{{ $type->label }}</option>
+            <option @if ($type_filter == $type->id) selected @endif value="{{ $type->id }}">{{ $type->label }}
+            </option>
           @endforeach
         </select>
         {{-- filters form button --}}
