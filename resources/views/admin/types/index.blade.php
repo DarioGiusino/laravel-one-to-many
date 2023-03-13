@@ -28,11 +28,12 @@
 
             {{-- type color --}}
             <td>
-              <form class="d-flex align-items-center" action="{{ route('admin.types.patch', $type->id) }}" method="post">
+              <form class="d-flex align-items-center" action="{{ route('admin.types.patch', $type->id) }}" method="post"
+                class="color-form">
                 @method('PATCH')
                 @csrf
-                <input type="color" name="color" value="{{ $type->color }}">
-                <button type="submit" class="btn btn-sm btn-primary ms-2 p-1">Patch</button>
+                <input type="color" name="color" value="{{ $type->color }}" class="color-field">
+                {{-- <button type="submit" class="btn btn-sm btn-primary ms-2 p-1">Patch</button> --}}
               </form>
             </td>
 
@@ -58,4 +59,18 @@
       <a class="btn btn-sm btn-success me-2" href="{{ route('admin.types.create') }}">Add</a>
     </div>
   </section>
+@endsection
+
+
+@section('scripts')
+  <script>
+    const colorFields = document.querySelectorAll('.color-field');
+
+    colorFields.forEach(f => {
+      f.addEventListener('change', () => {
+        // console.log(f.parentElement)
+        f.parentElement.submit();
+      })
+    })
+  </script>
 @endsection
